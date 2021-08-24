@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  master:
+    image: jimmy_locust
+    ports:
+     - "8089:8089"
+    volumes:
+      - $WORKSPACE:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master
+  
+  worker:
+    image: jimmy_locust
+    volumes:
+      - $WORKSPACE:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host master
